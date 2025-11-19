@@ -6,6 +6,14 @@
     <title>Design Explorer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- ✅ 1. CORREÇÃO: Força o Tailwind CDN a reconhecer classes dinâmicas no mobile -->
+    <script>
+      tailwind.config = {
+        content: ["./index.html"],
+        theme: { extend: {} }
+      }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=EB+Garamond:ital,wght@0,400;1,400&family=Inter:wght@300;400;500;700&family=Koulen&family=Libre+Barcode+39+Text&family=Pixelify+Sans:wght@400;700&family=Roboto+Mono:wght@400;700&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
@@ -24,7 +32,7 @@
         }
         
         /* Classes utilitárias de fontes */
-        .font-inter { font-family: var(--font-inter); }
+        .font-inter { font-family: var(--font-inter ); }
         .font-roboto-mono { font-family: var(--font-roboto-mono); }
         .font-eb-garamond { font-family: var(--font-eb-garamond); }
         .font-cinzel { font-family: var(--font-cinzel); }
@@ -34,170 +42,42 @@
         .font-barcode { font-family: var(--font-barcode); }
 
         /* ============================
-           ANIMAÇÕES GLOBAIS (do Gemini)
+           ANIMAÇÕES GLOBAIS
         ============================ */
-
-        /* Entrada suave para estilos mais leves */
-        .fade-soft {
-            animation: fadeSoft 0.6s ease-out forwards;
-            opacity: 0;
-        }
-        @keyframes fadeSoft {
-            to { opacity: 1; transform: translateY(0); }
-            from { opacity: 0; transform: translateY(10px); }
-        }
-
-        /* Entrada explosiva para estilos intensos */
-        .boom {
-            animation: boomEnter 0.45s cubic-bezier(.68,-0.55,.27,1.55);
-        }
-        @keyframes boomEnter {
-            0% { transform: scale(0.6) rotate(-3deg); opacity: 0; }
-            70% { transform: scale(1.08) rotate(1deg); opacity: 1; }
-            100% { transform: scale(1) rotate(0); }
-        }
-
-        /* Slide elegante */
-        .slide {
-            animation: slideIn 0.6s ease forwards;
-            opacity: 0;
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* "Pop" ao passar o mouse */
-        .pop-hover:hover {
-            transform: scale(1.08);
-        }
-        .press-hover:active {
-            transform: scale(0.92);
-        }
-
-        /* Movimento vibrante (para estilos neon ou agressivos) */
-        .neon-flicker {
-            animation: neonFlicker 1.6s infinite alternate;
-        }
-        @keyframes neonFlicker {
-            0% { filter: drop-shadow(0 0 3px #ff00ff); }
-            50% { filter: drop-shadow(0 0 15px #00ffff); }
-            100% { filter: drop-shadow(0 0 6px #ff0099); }
-        }
-
-        /* Shake leve */
-        .shake:hover {
-            animation: shakeAnim 0.25s ease-in-out;
-        }
-        @keyframes shakeAnim {
-            0% { transform: translateX(0); }
-            40% { transform: translateX(-4px); }
-            80% { transform: translateX(4px); }
-            100% { transform: translateX(0); }
-        }
+        .fade-soft { animation: fadeSoft 0.6s ease-out forwards; opacity: 0; }
+        @keyframes fadeSoft { to { opacity: 1; transform: translateY(0); } from { opacity: 0; transform: translateY(10px); } }
+        .boom { animation: boomEnter 0.45s cubic-bezier(.68,-0.55,.27,1.55); }
+        @keyframes boomEnter { 0% { transform: scale(0.6) rotate(-3deg); opacity: 0; } 70% { transform: scale(1.08) rotate(1deg); opacity: 1; } 100% { transform: scale(1) rotate(0); } }
+        .slide { animation: slideIn 0.6s ease forwards; opacity: 0; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .pop-hover:hover { transform: scale(1.08); }
+        .press-hover:active { transform: scale(0.92); }
+        .neon-flicker { animation: neonFlicker 1.6s infinite alternate; }
+        @keyframes neonFlicker { 0% { filter: drop-shadow(0 0 3px #ff00ff); } 50% { filter: drop-shadow(0 0 15px #00ffff); } 100% { filter: drop-shadow(0 0 6px #ff0099); } }
+        .shake:hover { animation: shakeAnim 0.25s ease-in-out; }
+        @keyframes shakeAnim { 0% { transform: translateX(0); } 40% { transform: translateX(-4px); } 80% { transform: translateX(4px); } 100% { transform: translateX(0); } }
 
         /* Efeitos Especiais por Estilo */
-        
-        /* Neumorfismo */
-        .neumorphic-outset {
-            box-shadow: 9px 9px 16px rgba(163,177,198,0.6), -9px -9px 16px rgba(255,255,255,0.5);
-            transition: transform 0.2s;
-        }
+        .neumorphic-outset { box-shadow: 9px 9px 16px rgba(163,177,198,0.6), -9px -9px 16px rgba(255,255,255,0.5); transition: transform 0.2s; }
         .neumorphic-outset:hover { transform: translateY(-3px); }
-        .neumorphic-inset {
-            box-shadow: inset 9px 9px 16px rgba(163,177,198,0.6), inset -9px -9px 16px rgba(255,255,255,0.5);
-        }
-
-        /* Glassmorfismo */
-        .glassmorphic {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            transition: backdrop-filter 0.5s;
-        }
+        .neumorphic-inset { box-shadow: inset 9px 9px 16px rgba(163,177,198,0.6), inset -9px -9px 16px rgba(255,255,255,0.5); }
+        .glassmorphic { background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); transition: backdrop-filter 0.5s; }
         .glassmorphic:hover { backdrop-filter: blur(18px); }
-
-        /* Animal Print (Leopardo) */
-        .animal-print-bg {
-            background-color: #f5c68b;
-            background-image: 
-                radial-gradient(circle at 100% 150%, #f5c68b 24%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 32%, rgba(0,0,0,0) 33%, #f5c68b 34%, #f5c68b 43%, rgba(0,0,0,0) 44%, rgba(0,0,0,0) 50%, #f5c68b 51%, #f5c68b 58%, rgba(0,0,0,0) 59%, rgba(0,0,0,0) 65%, #f5c68b 66%, #f5c68b 74%, rgba(0,0,0,0) 75%, rgba(0,0,0,0) 80%, #f5c68b 81%, #f5c68b 85%, rgba(0,0,0,0) 86%, rgba(0,0,0,0) 90%, #f5c68b 91%, #f5c68b 99%, rgba(0,0,0,0) 100%), 
-                radial-gradient(circle at 0% 150%, #8d5f2d 24%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 32%, rgba(0,0,0,0) 33%, #8d5f2d 34%, #8d5f2d 43%, rgba(0,0,0,0) 44%, rgba(0,0,0,0) 50%, #8d5f2d 51%, #8d5f2d 58%, rgba(0,0,0,0) 59%, rgba(0,0,0,0) 65%, #8d5f2d 66%, #8d5f2d 74%, rgba(0,0,0,0) 75%, rgba(0,0,0,0) 80%, #8d5f2d 81%, #8d5f2d 85%, rgba(0,0,0,0) 86%, rgba(0,0,0,0) 90%, #8d5f2d 91%, #8d5f2d 99%, rgba(0,0,0,0) 100%), 
-                radial-gradient(circle at 50% 100%, #8d5f2d 24%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 32%, rgba(0,0,0,0) 33%, #8d5f2d 34%, #8d5f2d 43%, rgba(0,0,0,0) 44%, rgba(0,0,0,0) 50%, #8d5f2d 51%, #8d5f2d 58%, rgba(0,0,0,0) 59%, rgba(0,0,0,0) 65%, #8d5f2d 66%, #8d5f2d 74%, rgba(0,0,0,0) 75%, rgba(0,0,0,0) 80%, #8d5f2d 81%, #8d5f2d 85%, rgba(0,0,0,0) 86%, rgba(0,0,0,0) 90%, #8d5f2d 91%, #8d5f2d 99%, rgba(0,0,0,0) 100%);
-            background-size: 80px 80px;
-            animation: panAnimal 20s linear infinite;
-        }
-        @keyframes panAnimal {
-            from { background-position: 0 0; }
-            to { background-position: 200px 200px; }
-        }
-
-        /* Pixel Art */
-        .pixelated-font {
-            text-shadow: 2px 2px 0 #000;
-        }
-        .pixel-art-button {
-            box-shadow: 4px 4px 0px #000000;
-            image-rendering: pixelated;
-            transition: transform 0.1s, box-shadow 0.1s;
-        }
-        .pixel-art-button:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 6px 6px 0 #000;
-        }
-        .pixel-art-button:active {
-            box-shadow: 1px 1px 0px #000000;
-            transform: translate(3px, 3px);
-        }
-
-        /* Pop Art */
-        .pop-art-dots-bg {
-            background-color: #fff;
-            background-image: radial-gradient(#ffcc00 20%, transparent 20%),
-                              radial-gradient(#ffcc00 20%, transparent 20%);
-            background-size: 30px 30px;
-            background-position: 0 0, 15px 15px;
-            animation: popWave 6s linear infinite;
-        }
-        @keyframes popWave {
-            from { background-position: 0 0, 15px 15px; }
-            to { background-position: 400px 400px, 415px 415px; }
-        }
-
-        /* Pixel Grid Background */
-        .pixel-grid-bg {
-            background-color: #222034;
-            background-image:
-                linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px);
-            background-size: 15px 15px;
-            image-rendering: pixelated;
-        }
-        
-        /* Transição de background do body */
-        body {
-            transition: all 0.5s ease;
-        }
-
-        /* Estilos para os novos temas */
-        .organic-bg {
-            background-color: #f7f3eb;
-        }
-
-        .skeuomorphic-texture {
-            background: linear-gradient(to bottom, #f5e7cf 0%, #e8d9b8 100%);
-            border: 1px solid #b58b4a;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.5);
-        }
-
-        .vintage-texture {
-            background-color: #f2e6d0;
-            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%235b4636' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
-        }
+        .animal-print-bg { background-color: #f5c68b; background-image: radial-gradient(circle at 100% 150%, #f5c68b 24%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 32%, rgba(0,0,0,0) 33%, #f5c68b 34%, #f5c68b 43%, rgba(0,0,0,0) 44%, rgba(0,0,0,0) 50%, #f5c68b 51%, #f5c68b 58%, rgba(0,0,0,0) 59%, rgba(0,0,0,0) 65%, #f5c68b 66%, #f5c68b 74%, rgba(0,0,0,0) 75%, rgba(0,0,0,0) 80%, #f5c68b 81%, #f5c68b 85%, rgba(0,0,0,0) 86%, rgba(0,0,0,0) 90%, #f5c68b 91%, #f5c68b 99%, rgba(0,0,0,0) 100%), radial-gradient(circle at 0% 150%, #8d5f2d 24%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 32%, rgba(0,0,0,0) 33%, #8d5f2d 34%, #8d5f2d 43%, rgba(0,0,0,0) 44%, rgba(0,0,0,0) 50%, #8d5f2d 51%, #8d5f2d 58%, rgba(0,0,0,0) 59%, rgba(0,0,0,0) 65%, #8d5f2d 66%, #8d5f2d 74%, rgba(0,0,0,0) 75%, rgba(0,0,0,0) 80%, #8d5f2d 81%, #8d5f2d 85%, rgba(0,0,0,0) 86%, rgba(0,0,0,0) 90%, #8d5f2d 91%, #8d5f2d 99%, rgba(0,0,0,0) 100%), radial-gradient(circle at 50% 100%, #8d5f2d 24%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 32%, rgba(0,0,0,0) 33%, #8d5f2d 34%, #8d5f2d 43%, rgba(0,0,0,0) 44%, rgba(0,0,0,0) 50%, #8d5f2d 51%, #8d5f2d 58%, rgba(0,0,0,0) 59%, rgba(0,0,0,0) 65%, #8d5f2d 66%, #8d5f2d 74%, rgba(0,0,0,0) 75%, rgba(0,0,0,0) 80%, #8d5f2d 81%, #8d5f2d 85%, rgba(0,0,0,0) 86%, rgba(0,0,0,0) 90%, #8d5f2d 91%, #8d5f2d 99%, rgba(0,0,0,0) 100%); background-size: 80px 80px; animation: panAnimal 20s linear infinite; }
+        @keyframes panAnimal { from { background-position: 0 0; } to { background-position: 200px 200px; } }
+        .pixelated-font { text-shadow: 2px 2px 0 #000; }
+        .pixel-art-button { box-shadow: 4px 4px 0px #000000; image-rendering: pixelated; transition: transform 0.1s, box-shadow 0.1s; }
+        .pixel-art-button:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #000; }
+        .pixel-art-button:active { box-shadow: 1px 1px 0px #000000; transform: translate(3px, 3px); }
+        .pop-art-dots-bg { background-color: #fff; background-image: radial-gradient(#ffcc00 20%, transparent 20%), radial-gradient(#ffcc00 20%, transparent 20%); background-size: 30px 30px; background-position: 0 0, 15px 15px; animation: popWave 6s linear infinite; }
+        @keyframes popWave { from { background-position: 0 0, 15px 15px; } to { background-position: 400px 400px, 415px 415px; } }
+        .pixel-grid-bg { background-color: #222034; background-image: linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px); background-size: 15px 15px; image-rendering: pixelated; }
+        body { transition: all 0.5s ease; }
+        .organic-bg { background-color: #f7f3eb; }
+        .skeuomorphic-texture { background: linear-gradient(to bottom, #f5e7cf 0%, #e8d9b8 100%); border: 1px solid #b58b4a; box-shadow: 0 4px 8px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.5); }
+        .vintage-texture { background-color: #f2e6d0; background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%235b4636' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E" ); }
     </style>
 </head>
-
 <body class="font-inter antialiased">
     <div class="container mx-auto max-w-7xl p-4 md:p-8">
         <header class="text-center mb-8 boom">
@@ -207,8 +87,7 @@
 
         <nav id="style-buttons-container" class="flex flex-wrap justify-center gap-2 md:gap-3 mb-8 slide"></nav>
 
-        <main id="content-container" class="fade-soft">
-            </main>
+        <main id="content-container" class="fade-soft"></main>
         
         <footer class="text-center mt-12 text-gray-500 fade-soft">
             <p>Um projeto de refatoração lúdica.</p>
@@ -222,8 +101,6 @@
         /*
         /--------------------------------------------------------------------------
         / O BANCO DE DADOS DE ESTILOS
-        / Cada objeto define as classes do body, os botões e, o mais importante,
-        / a função renderContent() que gera o HTML daquele estilo.
         /--------------------------------------------------------------------------
         */
         const styles = {
@@ -249,15 +126,10 @@
                         <div class="bg-white p-6 md:p-10 rounded-lg shadow-md border border-gray-200 ${this.animation}">
                             <h2 class="text-4xl font-semibold text-blue-900 mb-4">${this.name}</h2>
                             <p class="text-lg text-gray-700 mb-6">${p1}</p>
-                            
                             <h3 class="text-2xl font-medium text-gray-900 mb-3">Características Principais</h3>
-                            <ul class="list-disc list-inside text-gray-700 space-y-1 mb-6">
-                                ${features.map(f => `<li>${f}</li>`).join('')}
-                            </ul>
-                            
+                            <ul class="list-disc list-inside text-gray-700 space-y-1 mb-6">${features.map(f => `<li>${f}</li>`).join('')}</ul>
                             <h3 class="text-2xl font-medium text-gray-900 mb-3">Quando Usar</h3>
                             <p class="text-lg text-gray-700 mb-6">${whenToUse}</p>
-                            
                             <h3 class="text-2xl font-medium text-gray-900 mb-3">Exemplo Visual</h3>
                             <div class="p-6 bg-slate-100 rounded-lg grid grid-cols-3 gap-4">
                                 <div class="p-4 bg-blue-600 text-white rounded-md text-center font-medium pop-hover">Professional</div>
@@ -278,27 +150,17 @@
                 activeButtonClasses: "bg-black text-white rounded-none",
                 renderContent: function() {
                     const p1 = "O brutalismo digital é uma estética intencionalmente crua que rejeita as convenções de design polido, priorizando funcionalidade e autenticidade.";
-                    const features = [
-                        "Alto contraste de cores",
-                        "Elementos HTML básicos com pouca estilização",
-                        "Layouts assimétricos ou quebrados",
-                        "Tipografia monoespaçada"
-                    ];
+                    const features = ["Alto contraste de cores", "Elementos HTML básicos com pouca estilização", "Layouts assimétricos ou quebrados", "Tipografia monoespaçada"];
                     const whenToUse = "Para marcas alternativas, artistas, portfólios criativos e projetos que desejam se destacar através de uma estética ousada e não convencional.";
                     
                     return `
                         <div class="bg-white p-6 md:p-10 rounded-none border-4 border-black ${this.fontClass} ${this.animation}">
                             <h2 class="text-5xl font-bold mb-4">${this.name}</h2>
                             <p class="text-lg mb-6">${p1}</p>
-                            
                             <h3 class="text-3xl font-bold mb-3">Características</h3>
-                            <ul class="list-disc list-inside space-y-1 mb-6">
-                                ${features.map(f => `<li>${f}</li>`).join('')}
-                            </ul>
-                            
+                            <ul class="list-disc list-inside space-y-1 mb-6">${features.map(f => `<li>${f}</li>`).join('')}</ul>
                             <h3 class="text-3xl font-bold mb-3">Quando Usar</h3>
                             <p class="text-lg mb-6">${whenToUse}</p>
-                            
                             <h3 class="text-3xl font-bold mb-3">Exemplo Visual</h3>
                             <div class="grid grid-cols-3 gap-4">
                                 <div class="p-4 border-2 border-black text-center font-bold pop-hover">Seção 1</div>
@@ -306,10 +168,7 @@
                                 <div class="p-4 border-2 border-black text-center font-bold pop-hover">Seção 3</div>
                             </div>
                         </div>
-                        ${this.renderToggles(
-                            "Destaque visual, carregamento rápido e autenticidade.",
-                            "Pode ser percebido como 'não acabado' e ter usabilidade comprometida."
-                        )}
+                        ${this.renderToggles("Destaque visual, carregamento rápido e autenticidade.", "Pode ser percebido como 'não acabado' e ter usabilidade comprometida.")}
                     `;
                 }
             },
@@ -322,27 +181,17 @@
                 activeButtonClasses: "bg-purple-400 text-white",
                 renderContent: function() {
                     const p1 = "O design em modo escuro utiliza cores escuras como base, reduzindo a emissão de luz e proporcionando uma experiência visual mais confortável em ambientes com pouca luz.";
-                    const features = [
-                        "Fundo escuro com texto claro",
-                        "Cores saturadas para elementos de destaque",
-                        "Controles cuidadosos de contraste",
-                        "Redução da fadiga visual"
-                    ];
+                    const features = ["Fundo escuro com texto claro", "Cores saturadas para elementos de destaque", "Controles cuidadosos de contraste", "Redução da fadiga visual"];
                     const whenToUse = "Ideal para aplicativos noturnos, interfaces de mídia, dashboards e qualquer projeto que queira transmitir sofisticação e modernidade.";
                     
                     return `
                         <div class="bg-gray-800 p-6 md:p-10 rounded-lg border border-gray-700 ${this.animation}">
                             <h2 class="text-5xl font-bold mb-4 text-white">${this.name}</h2>
                             <p class="text-lg text-gray-300 mb-6">${p1}</p>
-                            
                             <h3 class="text-3xl font-bold text-gray-100 mb-3">Características</h3>
-                            <ul class="list-disc list-inside text-gray-300 space-y-1 mb-6">
-                                ${features.map(f => `<li>${f}</li>`).join('')}
-                            </ul>
-                            
+                            <ul class="list-disc list-inside text-gray-300 space-y-1 mb-6">${features.map(f => `<li>${f}</li>`).join('')}</ul>
                             <h3 class="text-3xl font-bold text-gray-100 mb-3">Quando Usar</h3>
                             <p class="text-lg text-gray-300 mb-6">${whenToUse}</p>
-                            
                             <h3 class="text-3xl font-bold text-gray-100 mb-3">Exemplo Visual</h3>
                             <div class="grid grid-cols-3 gap-4">
                                 <div class="p-4 bg-purple-600 text-white rounded-md text-center font-medium pop-hover">Feature</div>
@@ -350,10 +199,7 @@
                                 <div class="p-4 bg-purple-600 text-white rounded-md text-center font-medium pop-hover">Action</div>
                             </div>
                         </div>
-                        ${this.renderToggles(
-                            "Reduz fadiga ocular, economiza energia (OLED) e transmite sofisticação.",
-                            "Difícil de ler em ambientes claros e requer cuidado extra com contraste."
-                        )}
+                        ${this.renderToggles("Reduz fadiga ocular, economiza energia (OLED) e transmite sofisticação.", "Difícil de ler em ambientes claros e requer cuidado extra com contraste.")}
                     `;
                 }
             },
@@ -366,27 +212,17 @@
                 activeButtonClasses: "bg-[#a8a088] text-white rounded-none",
                 renderContent: function() {
                     const p1 = "Inspirado na filosofia japonesa, o Wabi-Sabi encontra beleza na imperfeição, simplicidade e na passagem do tempo, celebrando a autenticidade sobre a perfeição.";
-                    const features = [
-                        "Assimetria e irregularidade",
-                        "Texturas naturais e orgânicas",
-                        "Cores terrosas e neutras",
-                        "Espaço vazio como elemento design"
-                    ];
+                    const features = ["Assimetria e irregularidade", "Texturas naturais e orgânicas", "Cores terrosas e neutras", "Espaço vazio como elemento design"];
                     const whenToUse = "Para marcas artesanais, produtos naturais, projetos culturais e qualquer iniciativa que valorize autenticidade, mindfulness e conexão com o natural.";
                     
                     return `
                         <div class="bg-[#e7e2d8] p-6 md:p-10 rounded-none border border-[#a8a088]/30 ${this.fontClass} ${this.animation}">
                             <h2 class="text-5xl mb-4">${this.name}</h2>
                             <p class="text-xl italic mb-6">${p1}</p>
-                            
                             <h3 class="text-3xl mb-3">Características</h3>
-                            <ul class="list-disc list-inside space-y-1 mb-6 text-lg">
-                                ${features.map(f => `<li>${f}</li>`).join('')}
-                            </ul>
-                            
+                            <ul class="list-disc list-inside space-y-1 mb-6 text-lg">${features.map(f => `<li>${f}</li>`).join('')}</ul>
                             <h3 class="text-3xl mb-3">Quando Usar</h3>
                             <p class="text-lg mb-6">${whenToUse}</p>
-                            
                             <h3 class="text-3xl mb-3">Exemplo Visual</h3>
                             <div class="grid grid-cols-3 gap-4">
                                 <div class="p-4 bg-[#a8a088] text-white rounded-none text-center font-medium pop-hover">Imperfection</div>
@@ -394,10 +230,7 @@
                                 <div class="p-4 bg-[#a8a088] text-white rounded-none text-center font-medium pop-hover">Authentic</div>
                             </div>
                         </div>
-                        ${this.renderToggles(
-                            "Transmite autenticidade, honestidade e conexão emocional.",
-                            "Pode ser mal interpretado como descuido; implementação subjetiva."
-                        )}
+                        ${this.renderToggles("Transmite autenticidade, honestidade e conexão emocional.", "Pode ser mal interpretado como descuido; implementação subjetiva.")}
                     `;
                 }
             },
@@ -422,15 +255,10 @@
                         <div class="bg-black p-6 md:p-10 rounded-none border-2 border-white ${this.animation}">
                             <h2 class="text-5xl font-bold mb-4 text-yellow-400">${this.name} (Melhorado)</h2>
                             <p class="text-lg mb-6">${p1}</p>
-                            
                             <h3 class="text-3xl font-bold text-yellow-400 mb-3">Características</h3>
-                            <ul class="list-disc list-inside space-y-1 mb-6">
-                                ${features.map(f => `<li>${f}</li>`).join('')}
-                            </ul>
-                            
+                            <ul class="list-disc list-inside space-y-1 mb-6">${features.map(f => `<li>${f}</li>`).join('')}</ul>
                             <h3 class="text-3xl font-bold text-yellow-400 mb-3">Quando Usar</h3>
                             <p class="text-lg mb-6">${whenToUse}</p>
-                            
                             <h3 class="text-3xl font-bold text-yellow-400 mb-3">Exemplo Visual</h3>
                             <div class="grid grid-cols-3 gap-4">
                                 <a href="#" class="p-4 bg-black border-2 border-yellow-400 text-yellow-400 rounded-none text-center font-bold underline pop-hover">Link Ativo</a>
@@ -438,10 +266,7 @@
                                 <div class="p-4 bg-white text-black rounded-none text-center font-bold pop-hover">Invertido</div>
                             </div>
                         </div>
-                        ${this.renderToggles(
-                            "Acessibilidade máxima (WCAG AAA) e legibilidade em qualquer condição de luz.",
-                            "Estética limitada e pode ser visualmente cansativo ou agressivo para alguns usuários."
-                        )}
+                        ${this.renderToggles("Acessibilidade máxima (WCAG AAA) e legibilidade em qualquer condição de luz.", "Estética limitada e pode ser visualmente cansativo ou agressivo para alguns usuários.")}
                     `;
                 }
             },
@@ -457,12 +282,7 @@
                 },
                 renderContent: function() {
                     const p1 = "Inspirado na ficção científica distópica, o estilo cyberpunk combina cores neon vibrantes, temas escuros e elementos futuristas para criar uma estética high-tech e low-life.";
-                    const features = [
-                        "Cores neon vibrantes sobre fundos escuros",
-                        "Tipografia futurista e angular",
-                        "Elementos glitch e distorções",
-                        "Estética high-tech, low-life"
-                    ];
+                    const features = ["Cores neon vibrantes sobre fundos escuros", "Tipografia futurista e angular", "Elementos glitch e distorções", "Estética high-tech, low-life"];
                     const whenToUse = "Ideal para projetos de tecnologia avançada, jogos, eventos e qualquer marca que queira transmitir futurismo e rebeldia.";
                     
                     return `
@@ -470,15 +290,10 @@
                              style="text-shadow: 0 0 5px rgba(255, 0, 157, 0.3);">
                             <h2 class="text-6xl font-bold mb-4 text-[#ff00e6]" style="text-shadow: 0 0 10px #ff00e6;">${this.name}</h2>
                             <p class="text-lg text-gray-200 mb-6">${p1}</p>
-                            
                             <h3 class="text-3xl font-bold text-[#00ffff] mb-3" style="text-shadow: 0 0 8px #00ffff;">Características</h3>
-                            <ul class="list-disc list-inside text-gray-200 space-y-1 mb-6">
-                                ${features.map(f => `<li>${f}</li>`).join('')}
-                            </ul>
-                            
+                            <ul class="list-disc list-inside text-gray-200 space-y-1 mb-6">${features.map(f => `<li>${f}</li>`).join('')}</ul>
                             <h3 class="text-3xl font-bold text-[#00ffff] mb-3" style="text-shadow: 0 0 8px #00ffff;">Quando Usar</h3>
                             <p class="text-lg text-gray-200 mb-6">${whenToUse}</p>
-                            
                             <h3 class="text-3xl font-bold text-[#00ffff] mb-3" style="text-shadow: 0 0 8px #00ffff;">Exemplo Visual</h3>
                             <div class="grid grid-cols-3 gap-4">
                                 <div class="p-4 bg-pink-600 text-white rounded-none text-center font-bold border-2 border-pink-400 shadow-lg shadow-pink-600/50 pop-hover">NEON</div>
@@ -486,10 +301,7 @@
                                 <div class="p-4 bg-yellow-400 text-black rounded-none text-center font-bold border-2 border-yellow-200 shadow-lg shadow-yellow-400/50 pop-hover">FUTURE</div>
                             </div>
                         </div>
-                        ${this.renderToggles(
-                            "Alto impacto visual, memorabilidade e transmite inovação.",
-                            "Pode cansar os olhos e ter baixa legibilidade; não é para todos os públicos."
-                        )}
+                        ${this.renderToggles("Alto impacto visual, memorabilidade e transmite inovação.", "Pode cansar os olhos e ter baixa legibilidade; não é para todos os públicos.")}
                     `;
                 }
             },
@@ -505,27 +317,17 @@
                 },
                 renderContent: function() {
                     const p1 = "O vaporwave é uma estética nostálgica que mistura referências dos anos 80 e 90 com elementos digitais, criando uma atmosfera dreamy e retro-futurista.";
-                    const features = [
-                        "Cores pastel e neon",
-                        "Elementos da cultura pop dos anos 80/90",
-                        "Estátuas clássicas e elementos greco-romanos",
-                        "Texturas de mármore e gradientes"
-                    ];
+                    const features = ["Cores pastel e neon", "Elementos da cultura pop dos anos 80/90", "Estátuas clássicas e elementos greco-romanos", "Texturas de mármore e gradientes"];
                     const whenToUse = "Para projetos artísticos, marcas de moda alternativa, música e qualquer conteúdo que queira evocar nostalgia com uma twist futurista.";
                     
                     return `
                         <div class="glassmorphic p-6 md:p-10 rounded-lg shadow-2xl border border-white/30 ${this.animation}">
                             <h2 class="text-5xl font-bold mb-4 text-pink-600" style="text-shadow: 2px 2px #77ddff;">${this.name}</h2>
                             <p class="text-lg text-purple-900 font-medium mb-6">${p1}</p>
-                            
                             <h3 class="text-3xl font-bold text-purple-800 mb-3">Características</h3>
-                            <ul class="list-disc list-inside text-purple-900 space-y-1 mb-6">
-                                ${features.map(f => `<li>${f}</li>`).join('')}
-                            </ul>
-                            
+                            <ul class="list-disc list-inside text-purple-900 space-y-1 mb-6">${features.map(f => `<li>${f}</li>`).join('')}</ul>
                             <h3 class="text-3xl font-bold text-purple-800 mb-3">Quando Usar</h3>
                             <p class="text-lg text-purple-900 mb-6">${whenToUse}</p>
-                            
                             <h3 class="text-3xl font-bold text-purple-800 mb-3">Exemplo Visual</h3>
                             <div class="grid grid-cols-3 gap-4">
                                 <div class="p-4 bg-pink-500 text-white rounded-md text-center font-bold pop-hover" style="text-shadow: 2px 2px #000;">A E S T H E T I C</div>
@@ -533,10 +335,7 @@
                                 <div class="p-4 bg-yellow-300 text-purple-900 rounded-md text-center font-bold pop-hover">Dream</div>
                             </div>
                         </div>
-                        ${this.renderToggles(
-                            "Estética única e memorável, apela à nostalgia.",
-                            "Pode parecer 'kitsch' ou datado, não é para contextos corporativos."
-                        )}
+                        ${this.renderToggles("Estética única e memorável, apela à nostalgia.", "Pode parecer 'kitsch' ou datado, não é para contextos corporativos.")}
                     `;
                 }
             },
@@ -554,7 +353,6 @@
                         <div class="glassmorphic p-6 md:p-10 rounded-lg shadow-2xl border-2 border-black/30 ${this.animation}">
                             <h2 class="text-5xl ${this.fontClass} text-black mb-4">${this.name}</h2>
                             <p class="text-lg text-stone-800 mb-6">Uma estética ousada que usa padrões de pele de animais (leopardo, zebra, tigre) para transmitir energia selvagem, luxo e confiança.</p>
-                            
                             <h3 class="text-3xl ${this.fontClass} text-black mb-3">Características</h3>
                             <ul class="list-disc list-inside text-stone-800 space-y-1 mb-6">
                                 <li>Padrões de leopardo, zebra, cobra, etc.</li>
@@ -562,7 +360,6 @@
                                 <li>Combinação com preto e dourado para luxo.</li>
                                 <li>Usado para destaque e impacto.</li>
                             </ul>
-                            
                             <h3 class="text-3xl ${this.fontClass} text-black mb-3">Exemplo Dinâmico</h3>
                             <div class="p-6 bg-black rounded-lg flex items-center justify-around gap-4">
                                 <button class="py-3 px-6 ${this.fontClass} text-2xl text-black bg-amber-400 rounded-md transition-transform hover:scale-105">SEJA OUSADO</button>
@@ -588,7 +385,6 @@
                         <div class="bg-amber-50 p-6 md:p-10 rounded-lg shadow-xl border-2 border-amber-800/20 ${this.fontClass} ${this.animation}">
                             <h2 class="text-5xl ${this.fontClass} text-stone-900 mb-4 text-center">O ${this.name}</h2>
                             <p class="text-xl text-stone-700 mb-6 italic text-center">O "renascimento" da arte e da ciência. Foco na harmonia, proporção, elegância e humanismo. Um retorno aos ideais clássicos.</p>
-                            
                             <h3 class="text-3xl ${this.fontClass} text-stone-900 mb-3">Características Principais</h3>
                             <ul class="list-disc list-inside text-stone-700 space-y-1 mb-6 text-lg">
                                 <li>Tipografia serifada elegante (Garamond, Jenson).</li>
@@ -596,7 +392,6 @@
                                 <li>Cores ricas, mas naturais (terracota, azul-ultramarino).</li>
                                 <li>Ornamentos, bordas e capitulares.</li>
                             </ul>
-                            
                             <h3 class="text-3xl ${this.fontClass} text-stone-900 mb-3">Exemplo Dinâmico</h3>
                             <div class="p-6 bg-white rounded-md border border-stone-300">
                                 <p class="text-4xl text-stone-800 mb-4"><span class="font-bold text-7xl float-left mr-3">U</span>m homem não pode fazer nada tão perfeitamente que não possa ser totalmente destruído por outro.</p>
@@ -619,7 +414,6 @@
                         <div class="bg-gray-700 p-6 md:p-10 rounded-lg shadow-lg border border-gray-600 ${this.animation}">
                             <h2 class="text-6xl ${this.fontClass} text-amber-400 mb-4 tracking-widest">${this.name}</h2>
                             <p class="text-lg text-gray-300 mb-6">Inspirado na cultura de rua, graffiti, skate e música. É cru, energético, e muitas vezes usa texturas de concreto, metal e spray.</p>
-                            
                             <h3 class="text-3xl ${this.fontClass} text-white mb-3">Características</h3>
                             <ul class="list-disc list-inside text-gray-300 space-y-1 mb-6">
                                 <li>Fontes Stencil, Graffiti ou Sans-serif Bold.</li>
@@ -627,9 +421,8 @@
                                 <li>Cores dessaturadas com "pops" de neon ou cores vibrantes.</li>
                                 <li>Layouts assimétricos, "colados".</li>
                             </ul>
-                            
                             <h3 class="text-3xl ${this.fontClass} text-white mb-3">Exemplo Dinâmico</h3>
-                            <div class="p-6 bg-gray-900 rounded-md flex items-center justify-between gap-4" style="background-image: url('https://www.transparenttextures.com/patterns/concrete-wall.png');">
+                            <div class="p-6 bg-gray-900 rounded-md flex items-center justify-between gap-4" style="background-image: url('https://www.transparenttextures.com/patterns/concrete-wall.png' );">
                                 <p class="text-5xl ${this.fontClass} text-white" style="text-shadow: 0 0 10px #fde047;">ZONA LESTE</p>
                                 <div class="text-right font-barcode text-6xl text-gray-400">
                                     <p>112358</p>
@@ -652,7 +445,6 @@
                         <div class="bg-gray-800 p-6 md:p-10 rounded-none shadow-lg border-4 border-blue-400 ${this.fontClass} text-lg ${this.animation}">
                             <h2 class="text-6xl pixelated-font text-yellow-400 mb-4">PIXEL ART</h2>
                             <p class="text-gray-300 mb-6">Uma estética retro inspirada nos gráficos de computadores e videogames de 8 e 16 bits. Tudo é construído a partir de blocos (pixels).</p>
-                            
                             <h3 class="text-3xl pixelated-font text-green-400 mb-3">Características</h3>
                             <ul class="list-disc list-inside text-gray-300 space-y-1 mb-6">
                                 <li>Fontes "Bitmapped" (como esta).</li>
@@ -660,7 +452,6 @@
                                 <li>Paleta de cores limitada e vibrante.</li>
                                 <li>Elementos "quadrados" e sombras em bloco.</li>
                             </ul>
-                            
                             <h3 class="text-3xl pixelated-font text-green-400 mb-3">Exemplo Dinâmico</h3>
                             <div class="p-6 bg-black rounded-sm border-2 border-gray-600 flex items-center justify-around gap-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-16 h-16" style="image-rendering: pixelated;">
@@ -671,7 +462,7 @@
                                 </button>
                             </div>
                         </div>
-                        ${this.renderToggles("Nostálgico e claro", "Infantil, pouco sério")}
+                        ${this.renderToggles("Nostálgico e claro", "Infantil, pouco sério" )}
                     `;
                 }
             },
@@ -687,7 +478,6 @@
                         <div class="bg-white p-6 md:p-10 rounded-lg shadow-sm border border-gray-200 ${this.animation}">
                             <h2 class="text-4xl font-light tracking-tight mb-4">${this.name}</h2>
                             <p class="text-lg text-gray-600 mb-6">"Menos é mais". O minimalismo foca no essencial, removendo o excesso para criar uma experiência limpa, calma e focada.</p>
-                            
                             <h3 class="text-2xl font-medium text-gray-900 mb-3">Características</h3>
                             <ul class="list-disc list-inside text-gray-600 space-y-1 mb-6">
                                 <li>Muito espaço em branco (respiro).</li>
@@ -695,7 +485,6 @@
                                 <li>Tipografia Sans-serif limpa e legível.</li>
                                 <li>Nenhum elemento desnecessário.</li>
                             </ul>
-                            
                             <h3 class="text-2xl font-medium text-gray-900 mb-3">Exemplo Dinâmico</h3>
                             <div class="p-6 bg-gray-50 rounded-lg flex items-center justify-between gap-4">
                                 <p class="text-gray-700">Artigo Essencial</p>
@@ -719,7 +508,6 @@
                         <div class="glassmorphic p-6 md:p-10 rounded-2xl shadow-2xl ${this.animation}">
                             <h2 class="text-4xl font-bold mb-4">${this.name}</h2>
                             <p class="text-lg text-gray-200 mb-6">A estética do "vidro fosco". Cria uma hierarquia visual usando transparência, desfoque e bordas finas para simular vidro sobre um fundo colorido.</p>
-                            
                             <h3 class="text-2xl font-bold mb-3">Características</h3>
                             <ul class="list-disc list-inside text-gray-200 space-y-1 mb-6">
                                 <li>Transparência e desfoque de fundo (backdrop-filter).</li>
@@ -727,7 +515,6 @@
                                 <li>Sombra suave para dar profundidade.</li>
                                 <li>Cores vibrantes no fundo para destacar o efeito.</li>
                             </ul>
-                            
                             <h3 class="text-2xl font-bold mb-3">Exemplo Dinâmico</h3>
                             <div class="p-6 glassmorphic rounded-xl flex items-center justify-between gap-4">
                                 <p class="text-white font-medium">Painel de Controle</p>
@@ -750,7 +537,6 @@
                         <div class="bg-[#e0e5ec] p-6 md:p-10 rounded-3xl neumorphic-outset ${this.animation}">
                             <h2 class="text-4xl font-bold mb-4 text-gray-800">${this.name}</h2>
                             <p class="text-lg text-gray-600 mb-6">A "nova" interface suave. Os elementos parecem "extrudados" do fundo, usando sombras claras e escuras para um visual 3D suave e tátil.</p>
-                            
                             <h3 class="text-2xl font-bold mb-3 text-gray-800">Características</h3>
                             <ul class="list-disc list-inside text-gray-600 space-y-1 mb-6">
                                 <li>Duas sombras: uma clara (top-left) e uma escura (bottom-right).</li>
@@ -758,7 +544,6 @@
                                 <li>Visual de "plástico macio" ou "argila".</li>
                                 <li>Baixo contraste.</li>
                             </ul>
-                            
                             <h3 class="text-2xl font-bold mb-3 text-gray-800">Exemplo Dinâmico</h3>
                             <div class="p-6 bg-[#e0e5ec] rounded-2xl neumorphic-inset flex items-center justify-around gap-4">
                                 <button class="w-16 h-16 rounded-full neumorphic-outset flex items-center justify-center text-2xl text-blue-600 transition-shadow active:neumorphic-inset pop-hover">▶</button>
@@ -782,7 +567,6 @@
                         <div class="bg-yellow-300 p-6 md:p-10 rounded-none shadow-lg border-4 border-black shadow-[8px_8px_0_#000000] ${this.animation}">
                             <h2 class="text-7xl ${this.fontClass} text-red-600 mb-4 tracking-tighter" style="-webkit-text-stroke: 2px black;">${this.name}!</h2>
                             <p class="text-lg text-black mb-6 font-medium">Inspirado na cultura de massa e publicidade dos anos 60. É ousado, irônico, e usa cores vibrantes e chapadas.</p>
-                            
                             <h3 class="text-3xl ${this.fontClass} text-blue-600 mb-3" style="-webkit-text-stroke: 1px black;">Características</h3>
                             <ul class="list-disc list-inside text-black space-y-1 mb-6 font-medium">
                                 <li>Cores primárias brilhantes (vermelho, amarelo, azul).</li>
@@ -790,7 +574,6 @@
                                 <li>Pontos (Ben-Day dots) e padrões repetidos.</li>
                                 <li>Tipografia bold e impactante.</li>
                             </ul>
-                            
                             <h3 class="text-3xl ${this.fontClass} text-blue-600 mb-3" style="-webkit-text-stroke: 1px black;">Exemplo Dinâmico</h3>
                             <div class="p-6 pop-art-dots-bg rounded-none border-2 border-black grid grid-cols-2 gap-4">
                                 <div class="bg-red-500 border-2 border-black p-4 flex items-center justify-center pop-hover">
@@ -805,7 +588,6 @@
                     `;
                 }
             },
-
             // --- ESTILOS FALTANTES ---
             organic: {
                 name: "Orgânico",
@@ -816,39 +598,9 @@
                 activeButtonClasses: "bg-[#a8c3a8] text-white",
                 renderContent: function() {
                     const p1 = "Inspirado nas formas da natureza, o design orgânico utiliza curvas fluidas, cores terrosas e texturas naturais para criar experiências acolhedoras e humanas.";
-                    const features = [
-                        "Formas arredondadas e fluidas",
-                        "Cores inspiradas na natureza",
-                        "Ilustrações à mão ou orgânicas",
-                        "Texturas naturais"
-                    ];
+                    const features = ["Formas arredondadas e fluidas", "Cores inspiradas na natureza", "Ilustrações à mão ou orgânicas", "Texturas naturais"];
                     const whenToUse = "Ideal para marcas de wellness, produtos ecológicos, alimentos naturais e qualquer projeto que queira transmitir calor, autenticidade e conexão com a natureza.";
-                    
-                    return `
-                        <div class="bg-[#f0e8dc] p-6 md:p-10 rounded-2xl shadow-lg border border-[#a8c3a8]/30 ${this.animation}">
-                            <h2 class="text-5xl font-medium mb-4">${this.name}</h2>
-                            <p class="text-lg mb-6">${p1}</p>
-                            
-                            <h3 class="text-3xl font-medium mb-3">Características</h3>
-                            <ul class="list-disc list-inside space-y-1 mb-6">
-                                ${features.map(f => `<li>${f}</li>`).join('')}
-                            </ul>
-                            
-                            <h3 class="text-3xl font-medium mb-3">Quando Usar</h3>
-                            <p class="text-lg mb-6">${whenToUse}</p>
-                            
-                            <h3 class="text-3xl font-medium mb-3">Exemplo Visual</h3>
-                            <div class="grid grid-cols-3 gap-4">
-                                <div class="p-4 bg-[#a8c3a8] text-white rounded-2xl text-center font-medium pop-hover">Nature</div>
-                                <div class="p-4 bg-[#a8c3a8] text-white rounded-2xl text-center font-medium pop-hover">Organic</div>
-                                <div class="p-4 bg-[#a8c3a8] text-white rounded-2xl text-center font-medium pop-hover">Eco</div>
-                            </div>
-                        </div>
-                        ${this.renderToggles(
-                            "Confortável e acolhedor para usuários, destaque visual único",
-                            "Pode parecer desorganizado se mal executado, requer mais recursos visuais"
-                        )}
-                    `;
+                    return `<div class="bg-[#f0e8dc] p-6 md:p-10 rounded-2xl shadow-lg border border-[#a8c3a8]/30 ${this.animation}"><h2 class="text-5xl font-medium mb-4">${this.name}</h2><p class="text-lg mb-6">${p1}</p><h3 class="text-3xl font-medium mb-3">Características</h3><ul class="list-disc list-inside space-y-1 mb-6">${features.map(f => `<li>${f}</li>`).join('')}</ul><h3 class="text-3xl font-medium mb-3">Quando Usar</h3><p class="text-lg mb-6">${whenToUse}</p><h3 class="text-3xl font-medium mb-3">Exemplo Visual</h3><div class="grid grid-cols-3 gap-4"><div class="p-4 bg-[#a8c3a8] text-white rounded-2xl text-center font-medium pop-hover">Nature</div><div class="p-4 bg-[#a8c3a8] text-white rounded-2xl text-center font-medium pop-hover">Organic</div><div class="p-4 bg-[#a8c3a8] text-white rounded-2xl text-center font-medium pop-hover">Eco</div></div></div>${this.renderToggles("Confortável e acolhedor para usuários, destaque visual único", "Pode parecer desorganizado se mal executado, requer mais recursos visuais")}`;
                 }
             },
             monochrome: {
@@ -860,39 +612,9 @@
                 activeButtonClasses: "bg-black text-white",
                 renderContent: function() {
                     const p1 = "O design monocromático utiliza variações de uma única cor, criando harmonia visual através de tons, matizes e saturações diferentes.";
-                    const features = [
-                        "Paleta baseada em uma única cor",
-                        "Variações de tom para criar hierarquia",
-                        "Ênfase na tipografia e formas",
-                        "Harmonia visual consistente"
-                    ];
+                    const features = ["Paleta baseada em uma única cor", "Variações de tom para criar hierarquia", "Ênfase na tipografia e formas", "Harmonia visual consistente"];
                     const whenToUse = "Perfeito para marcas com identidade visual forte, projetos artísticos e qualquer design que queira transmitir coesão e elegância.";
-                    
-                    return `
-                        <div class="bg-white p-6 md:p-10 rounded-lg shadow-sm border border-gray-300 ${this.animation}">
-                            <h2 class="text-5xl font-medium mb-4">${this.name}</h2>
-                            <p class="text-lg text-gray-700 mb-6">${p1}</p>
-                            
-                            <h3 class="text-3xl font-medium mb-3">Características</h3>
-                            <ul class="list-disc list-inside text-gray-700 space-y-1 mb-6">
-                                ${features.map(f => `<li>${f}</li>`).join('')}
-                            </ul>
-                            
-                            <h3 class="text-3xl font-medium mb-3">Quando Usar</h3>
-                            <p class="text-lg text-gray-700 mb-6">${whenToUse}</p>
-                            
-                            <h3 class="text-3xl font-medium mb-3">Exemplo Visual</h3>
-                            <div class="grid grid-cols-3 gap-4">
-                                <div class="p-4 bg-gray-800 text-white rounded-md text-center font-medium pop-hover">Primary</div>
-                                <div class="p-4 bg-gray-600 text-white rounded-md text-center font-medium pop-hover">Secondary</div>
-                                <div class="p-4 bg-gray-400 text-black rounded-md text-center font-medium pop-hover">Accent</div>
-                            </div>
-                        </div>
-                        ${this.renderToggles(
-                            "Harmonia visual consistente, foco na tipografia e conteúdo",
-                            "Pode parecer monótono se mal executado, limita a expressividade criativa"
-                        )}
-                    `;
+                    return `<div class="bg-white p-6 md:p-10 rounded-lg shadow-sm border border-gray-300 ${this.animation}"><h2 class="text-5xl font-medium mb-4">${this.name}</h2><p class="text-lg text-gray-700 mb-6">${p1}</p><h3 class="text-3xl font-medium mb-3">Características</h3><ul class="list-disc list-inside text-gray-700 space-y-1 mb-6">${features.map(f => `<li>${f}</li>`).join('')}</ul><h3 class="text-3xl font-medium mb-3">Quando Usar</h3><p class="text-lg text-gray-700 mb-6">${whenToUse}</p><h3 class="text-3xl font-medium mb-3">Exemplo Visual</h3><div class="grid grid-cols-3 gap-4"><div class="p-4 bg-gray-800 text-white rounded-md text-center font-medium pop-hover">Primary</div><div class="p-4 bg-gray-600 text-white rounded-md text-center font-medium pop-hover">Secondary</div><div class="p-4 bg-gray-400 text-black rounded-md text-center font-medium pop-hover">Accent</div></div></div>${this.renderToggles("Harmonia visual consistente, foco na tipografia e conteúdo", "Pode parecer monótono se mal executado, limita a expressividade criativa")}`;
                 }
             },
             material: {
@@ -904,39 +626,9 @@
                 activeButtonClasses: "bg-[#1e88e5] text-white",
                 renderContent: function() {
                     const p1 = "Criado pelo Google, o Material Design é um sistema de design que utiliza sombras, profundidade e animações para criar interfaces intuitivas e fisicamente plausíveis.";
-                    const features = [
-                        "Uso de sombras para indicar hierarquia",
-                        "Animações e transições fluidas",
-                        "Grid consistente e tipografia clara",
-                        "Cores vibrantes e intencionais"
-                    ];
+                    const features = ["Uso de sombras para indicar hierarquia", "Animações e transições fluidas", "Grid consistente e tipografia clara", "Cores vibrantes e intencionais"];
                     const whenToUse = "Ideal para aplicativos móveis, produtos digitais e qualquer projeto que precise de uma interface consistente, acessível e familiar para os usuários.";
-                    
-                    return `
-                        <div class="bg-white p-6 md:p-10 rounded-lg shadow-sm border border-gray-200 ${this.animation}">
-                            <h2 class="text-5xl font-medium mb-4">${this.name}</h2>
-                            <p class="text-lg text-[#546e7a] mb-6">${p1}</p>
-                            
-                            <h3 class="text-3xl font-medium mb-3">Características</h3>
-                            <ul class="list-disc list-inside text-[#546e7a] space-y-1 mb-6">
-                                ${features.map(f => `<li>${f}</li>`).join('')}
-                            </ul>
-                            
-                            <h3 class="text-3xl font-medium mb-3">Quando Usar</h3>
-                            <p class="text-lg text-[#546e7a] mb-6">${whenToUse}</p>
-                            
-                            <h3 class="text-3xl font-medium mb-3">Exemplo Visual</h3>
-                            <div class="grid grid-cols-3 gap-4">
-                                <div class="p-4 bg-[#1e88e5] text-white rounded-md text-center font-medium shadow-md pop-hover">Card</div>
-                                <div class="p-4 bg-[#1e88e5] text-white rounded-md text-center font-medium shadow-md pop-hover">Button</div>
-                                <div class="p-4 bg-[#1e88e5] text-white rounded-md text-center font-medium shadow-md pop-hover">Menu</div>
-                            </div>
-                        </div>
-                        ${this.renderToggles(
-                            "Experiência de usuário consistente, documentação abrangente",
-                            "Pode parecer genérico, menos espaço para expressão criativa única"
-                        )}
-                    `;
+                    return `<div class="bg-white p-6 md:p-10 rounded-lg shadow-sm border border-gray-200 ${this.animation}"><h2 class="text-5xl font-medium mb-4">${this.name}</h2><p class="text-lg text-[#546e7a] mb-6">${p1}</p><h3 class="text-3xl font-medium mb-3">Características</h3><ul class="list-disc list-inside text-[#546e7a] space-y-1 mb-6">${features.map(f => `<li>${f}</li>`).join('')}</ul><h3 class="text-3xl font-medium mb-3">Quando Usar</h3><p class="text-lg text-[#546e7a] mb-6">${whenToUse}</p><h3 class="text-3xl font-medium mb-3">Exemplo Visual</h3><div class="grid grid-cols-3 gap-4"><div class="p-4 bg-[#1e88e5] text-white rounded-md text-center font-medium shadow-md pop-hover">Card</div><div class="p-4 bg-[#1e88e5] text-white rounded-md text-center font-medium shadow-md pop-hover">Button</div><div class="p-4 bg-[#1e88e5] text-white rounded-md text-center font-medium shadow-md pop-hover">Menu</div></div></div>${this.renderToggles("Experiência de usuário consistente, documentação abrangente", "Pode parecer genérico, menos espaço para expressão criativa única")}`;
                 }
             },
             flat: {
@@ -948,39 +640,9 @@
                 activeButtonClasses: "bg-[#1abc9c] text-white",
                 renderContent: function() {
                     const p1 = "O flat design elimina elementos estilizados como sombras, gradientes e texturas, focando em cores sólidas, formas simples e tipografia clara.";
-                    const features = [
-                        "Elementos bidimensionais sem profundidade",
-                        "Cores sólidas e vibrantes",
-                        "Tipografia limpa e legível",
-                        "Ícones simples e minimalistas"
-                    ];
+                    const features = ["Elementos bidimensionais sem profundidade", "Cores sólidas e vibrantes", "Tipografia limpa e legível", "Ícones simples e minimalistas"];
                     const whenToUse = "Perfeito para interfaces que precisam de carregamento rápido, sites com muito conteúdo e projetos que valorizam a clareza acima de efeitos visuais.";
-                    
-                    return `
-                        <div class="bg-white p-6 md:p-10 rounded-lg shadow-sm border border-gray-200 ${this.animation}">
-                            <h2 class="text-5xl font-light mb-4">${this.name}</h2>
-                            <p class="text-lg text-[#7f8c8d] mb-6">${p1}</p>
-                            
-                            <h3 class="text-3xl font-medium mb-3">Características</h3>
-                            <ul class="list-disc list-inside text-[#7f8c8d] space-y-1 mb-6">
-                                ${features.map(f => `<li>${f}</li>`).join('')}
-                            </ul>
-                            
-                            <h3 class="text-3xl font-medium mb-3">Quando Usar</h3>
-                            <p class="text-lg text-[#7f8c8d] mb-6">${whenToUse}</p>
-                            
-                            <h3 class="text-3xl font-medium mb-3">Exemplo Visual</h3>
-                            <div class="grid grid-cols-3 gap-4">
-                                <div class="p-4 bg-[#1abc9c] text-white text-center font-medium pop-hover">UI</div>
-                                <div class="p-4 bg-[#1abc9c] text-white text-center font-medium pop-hover">UX</div>
-                                <div class="p-4 bg-[#1abc9c] text-white text-center font-medium pop-hover">Web</div>
-                            </div>
-                        </div>
-                        ${this.renderToggles(
-                            "Carregamento muito rápido, claro e direto",
-                            "Pode parecer muito básico, falta de hierarquia visual"
-                        )}
-                    `;
+                    return `<div class="bg-white p-6 md:p-10 rounded-lg shadow-sm border border-gray-200 ${this.animation}"><h2 class="text-5xl font-light mb-4">${this.name}</h2><p class="text-lg text-[#7f8c8d] mb-6">${p1}</p><h3 class="text-3xl font-medium mb-3">Características</h3><ul class="list-disc list-inside text-[#7f8c8d] space-y-1 mb-6">${features.map(f => `<li>${f}</li>`).join('')}</ul><h3 class="text-3xl font-medium mb-3">Quando Usar</h3><p class="text-lg text-[#7f8c8d] mb-6">${whenToUse}</p><h3 class="text-3xl font-medium mb-3">Exemplo Visual</h3><div class="grid grid-cols-3 gap-4"><div class="p-4 bg-[#1abc9c] text-white text-center font-medium pop-hover">UI</div><div class="p-4 bg-[#1abc9c] text-white text-center font-medium pop-hover">UX</div><div class="p-4 bg-[#1abc9c] text-white text-center font-medium pop-hover">Web</div></div></div>${this.renderToggles("Carregamento muito rápido, claro e direto", "Pode parecer muito básico, falta de hierarquia visual")}`;
                 }
             },
             skeuomorphism: {
@@ -992,39 +654,9 @@
                 activeButtonClasses: "bg-[#b58b4a] text-white",
                 renderContent: function() {
                     const p1 = "O skeumorfismo imita objetos do mundo real na interface digital, usando texturas, sombras e detalhes para criar elementos reconhecíveis e intuitivos.";
-                    const features = [
-                        "Imitação de objetos físicos",
-                        "Texturas realistas (madeira, couro, tecido)",
-                        "Sombras complexas e highlights",
-                        "Elementos tridimensionais"
-                    ];
+                    const features = ["Imitação de objetos físicos", "Texturas realistas (madeira, couro, tecido)", "Sombras complexas e highlights", "Elementos tridimensionais"];
                     const whenToUse = "Para interfaces que precisam ser extremamente intuitivas, aplicativos especializados e projetos que buscam um apelo nostálgico ou tátil.";
-                    
-                    return `
-                        <div class="skeuomorphic-texture p-6 md:p-10 rounded-lg border border-[#8c6c3a] ${this.animation}">
-                            <h2 class="text-5xl font-bold mb-4">${this.name}</h2>
-                            <p class="text-lg mb-6">${p1}</p>
-                            
-                            <h3 class="text-3xl font-bold mb-3">Características</h3>
-                            <ul class="list-disc list-inside space-y-1 mb-6">
-                                ${features.map(f => `<li>${f}</li>`).join('')}
-                            </ul>
-                            
-                            <h3 class="text-3xl font-bold mb-3">Quando Usar</h3>
-                            <p class="text-lg mb-6">${whenToUse}</p>
-                            
-                            <h3 class="text-3xl font-bold mb-3">Exemplo Visual</h3>
-                            <div class="grid grid-cols-3 gap-4">
-                                <div class="p-4 bg-gradient-to-b from-[#d4b78c] to-[#b58b4a] border border-[#8c6c3a] rounded-md text-center font-bold text-[#3b2408] shadow-inner pop-hover">Button</div>
-                                <div class="p-4 bg-gradient-to-b from-[#f0e8dc] to-[#e0d4c0] border border-[#b58b4a] rounded-md text-center font-bold text-[#3b2408] shadow-inner pop-hover">Panel</div>
-                                <div class="p-4 bg-gradient-to-b from-[#d4b78c] to-[#b58b4a] border border-[#8c6c3a] rounded-md text-center font-bold text-[#3b2408] shadow-inner pop-hover">Control</div>
-                            </div>
-                        </div>
-                        ${this.renderToggles(
-                            "Extremamente intuitivo para usuários iniciantes, apelo emocional",
-                            "Pode parecer datado, consome mais recursos, difícil implementação"
-                        )}
-                    `;
+                    return `<div class="skeuomorphic-texture p-6 md:p-10 rounded-lg border border-[#8c6c3a] ${this.animation}"><h2 class="text-5xl font-bold mb-4">${this.name}</h2><p class="text-lg mb-6">${p1}</p><h3 class="text-3xl font-bold mb-3">Características</h3><ul class="list-disc list-inside space-y-1 mb-6">${features.map(f => `<li>${f}</li>`).join('')}</ul><h3 class="text-3xl font-bold mb-3">Quando Usar</h3><p class="text-lg mb-6">${whenToUse}</p><h3 class="text-3xl font-bold mb-3">Exemplo Visual</h3><div class="grid grid-cols-3 gap-4"><div class="p-4 bg-gradient-to-b from-[#d4b78c] to-[#b58b4a] border border-[#8c6c3a] rounded-md text-center font-bold text-[#3b2408] shadow-inner pop-hover">Button</div><div class="p-4 bg-gradient-to-b from-[#f0e8dc] to-[#e0d4c0] border border-[#b58b4a] rounded-md text-center font-bold text-[#3b2408] shadow-inner pop-hover">Panel</div><div class="p-4 bg-gradient-to-b from-[#d4b78c] to-[#b58b4a] border border-[#8c6c3a] rounded-md text-center font-bold text-[#3b2408] shadow-inner pop-hover">Control</div></div></div>${this.renderToggles("Extremamente intuitivo para usuários iniciantes, apelo emocional", "Pode parecer datado, consome mais recursos, difícil implementação")}`;
                 }
             },
             vintage: {
@@ -1036,39 +668,9 @@
                 activeButtonClasses: "bg-[#c49a6c] text-white",
                 renderContent: function() {
                     const p1 = "O design vintage inspira-se em eras passadas, incorporando elementos, tipografia e paletas de cores que evocam nostalgia e charme retro.";
-                    const features = [
-                        "Tipografia serifada e clássica",
-                        "Texturas envelhecidas e desgastadas",
-                        "Paletas de cores suaves e desbotadas",
-                        "Elementos ornamentais e detalhados"
-                    ];
+                    const features = ["Tipografia serifada e clássica", "Texturas envelhecidas e desgastadas", "Paletas de cores suaves e desbotadas", "Elementos ornamentais e detalhados"];
                     const whenToUse = "Ideal para marcas com história, produtos artesanais, estabelecimentos tradicionais e qualquer projeto que queira transmitir autenticidade e tradição.";
-                    
-                    return `
-                        <div class="bg-[#f8f1e4] p-6 md:p-10 rounded-sm shadow-sm border border-[#c49a6c] ${this.animation}">
-                            <h2 class="text-5xl font-medium mb-4">${this.name}</h2>
-                            <p class="text-lg text-[#5b4636] mb-6">${p1}</p>
-                            
-                            <h3 class="text-3xl font-medium mb-3">Características</h3>
-                            <ul class="list-disc list-inside text-[#5b4636] space-y-1 mb-6">
-                                ${features.map(f => `<li>${f}</li>`).join('')}
-                            </ul>
-                            
-                            <h3 class="text-3xl font-medium mb-3">Quando Usar</h3>
-                            <p class="text-lg text-[#5b4636] mb-6">${whenToUse}</p>
-                            
-                            <h3 class="text-3xl font-medium mb-3">Exemplo Visual</h3>
-                            <div class="grid grid-cols-3 gap-4">
-                                <div class="p-4 bg-[#c49a6c] text-white rounded-sm text-center font-medium pop-hover">Heritage</div>
-                                <div class="p-4 bg-[#c49a6c] text-white rounded-sm text-center font-medium pop-hover">Classic</div>
-                                <div class="p-4 bg-[#c49a6c] text-white rounded-sm text-center font-medium pop-hover">Timeless</div>
-                            </div>
-                        </div>
-                        ${this.renderToggles(
-                            "Transmite autenticidade e tradição, apelo emocional forte",
-                            "Pode parecer antiquado se mal executado, menor apelo para jovens"
-                        )}
-                    `;
+                    return `<div class="bg-[#f8f1e4] p-6 md:p-10 rounded-sm shadow-sm border border-[#c49a6c] ${this.animation}"><h2 class="text-5xl font-medium mb-4">${this.name}</h2><p class="text-lg text-[#5b4636] mb-6">${p1}</p><h3 class="text-3xl font-medium mb-3">Características</h3><ul class="list-disc list-inside text-[#5b4636] space-y-1 mb-6">${features.map(f => `<li>${f}</li>`).join('')}</ul><h3 class="text-3xl font-medium mb-3">Quando Usar</h3><p class="text-lg text-[#5b4636] mb-6">${whenToUse}</p><h3 class="text-3xl font-medium mb-3">Exemplo Visual</h3><div class="grid grid-cols-3 gap-4"><div class="p-4 bg-[#c49a6c] text-white rounded-sm text-center font-medium pop-hover">Heritage</div><div class="p-4 bg-[#c49a6c] text-white rounded-sm text-center font-medium pop-hover">Classic</div><div class="p-4 bg-[#c49a6c] text-white rounded-sm text-center font-medium pop-hover">Timeless</div></div></div>${this.renderToggles("Transmite autenticidade e tradição, apelo emocional forte", "Pode parecer antiquado se mal executado, menor apelo para jovens")}`;
                 }
             },
 
@@ -1091,8 +693,7 @@
 
         /*
         /--------------------------------------------------------------------------
-        / FUNÇÃO DE CARREGAMENTO
-        / Chamada quando um botão é clicado.
+        / FUNÇÃO DE CARREGAMENTO (COM CORREÇÕES)
         /--------------------------------------------------------------------------
         */
         function loadStyle(styleKey) {
@@ -1102,24 +703,29 @@
                 return;
             }
 
-            // 1. Limpa estilos customizados (background, text-shadow) e aplica classes do body
+            // 1. Limpa estilos customizados (background, text-shadow)
             document.body.style.background = '';
-            document.body.style.textShadow = ''; // Limpa o text-shadow (para o Cyberpunk)
-            document.body.className = `antialiased transition-all duration-500 ${style.bodyClasses}`;
+            document.body.style.textShadow = '';
+
+            // ✅ 3. CORREÇÃO: Usa setAttribute para aplicar classes ao <body>
+            const bodyClasses = `antialiased transition-all duration-500 ${style.bodyClasses} ${style.fontClass}`;
+            document.body.setAttribute("class", bodyClasses);
 
             // 2. Chama a função de inicialização específica (ex: Glassmorfismo, Vaporwave)
             if (style.init) {
                 style.init();
             }
 
-            // 3. Renderiza o HTML do conteúdo principal
+            // ✅ 2. CORREÇÃO: Limpa o conteúdo e força reflow antes de renderizar
+            contentContainer.innerHTML = "";
+            void contentContainer.offsetHeight; 
             contentContainer.innerHTML = style.renderContent();
 
             // 4. Atualiza os botões ativos
             const allButtons = buttonsContainer.querySelectorAll('button');
             allButtons.forEach(btn => {
                 const key = btn.dataset.style;
-                if (!styles[key]) return; // Proteção contra o helper
+                if (!styles[key]) return;
                 
                 const btnStyle = styles[key];
                 
@@ -1137,21 +743,16 @@
         /*
         /--------------------------------------------------------------------------
         / FUNÇÃO DE INICIALIZAÇÃO
-        / Cria os botões e carrega o primeiro estilo.
         /--------------------------------------------------------------------------
         */
         function init() {
-            // Adiciona a função renderToggles a todos os estilos
             Object.values(styles).forEach(style => {
-                // Previne que a própria função renderToggles receba ela mesma
                 if (typeof style === 'object' && style !== null) {
                     style.renderToggles = styles.renderToggles;
                 }
             });
 
-            // Cria os botões
             Object.keys(styles).forEach(key => {
-                // Ignora a função helper
                 if (key === 'renderToggles') return;
 
                 const style = styles[key];
@@ -1163,11 +764,9 @@
                 buttonsContainer.appendChild(btn);
             });
 
-            // Carrega o estilo padrão
-            loadStyle('corporate'); // Carregando o estilo migrado como padrão
+            loadStyle('corporate');
         }
 
-        // Inicia o app
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
